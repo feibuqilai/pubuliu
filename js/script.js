@@ -1,5 +1,33 @@
 window.onload = function(){
 	waterfall('main','box');
+	var dataPic = {"data":[{"src":"0.jpg"},{"src":"1.jpg"},{"src":"2.jpg"},{"src":"3.jpg"},{"src":"4.jpg"},
+							{"src":"5.jpg"},{"src":"6.jpg"},{"src":"7.jpg"},{"src":"8.jpg"},{"src":"9.jpg"},
+							{"src":"10.jpg"},{"src":"11.jpg"},{"src":"12.jpg"},{"src":"13.jpg"},{"src":"14.jpg"},
+							{"src":"15.jpg"},{"src":"16.jpg"},{"src":"17.jpg"},{"src":"18.jpg"},{"src":"19.jpg"},
+							{"src":"20.jpg"},{"src":"21.jpg"},{"src":"22.jpg"},{"src":"23.jpg"},{"src":"24.jpg"},
+							{"src":"25.jpg"}]};
+	window.onscroll = function(){
+		if (checkScrollSlide) {
+			var oParent = document.getElementById("main");
+			var oFragment = document.createDocumentFragment();
+			for(var i=0;i<dataPic.data.length;i++){
+				
+				var aBox = document.createElement('div');
+				aBox.className = 'box';
+				oFragment.appendChild(aBox);
+
+				var aPic = document.createElement('div');
+				aPic.className = 'pic';
+				aBox.appendChild(aPic);
+
+				var aImg = document.createElement('img');
+				aImg.src = "images/" + dataPic.data[i].src;
+				aPic.appendChild(aImg);
+			}
+			oParent.appendChild(oFragment);
+			waterfall('main','box');
+		}
+	}
 }
 
 function waterfall(parent,box){
@@ -33,4 +61,15 @@ function waterfall(parent,box){
 		}
 	}
 
+}
+
+function checkScrollSlide(){
+	var oParent = document.getElementById(parent);
+	var aBox = oParent.getElementsByClassName(box);
+	var lastBoxH = aBox[aBox.length-1].offsetTop + Math.floor(aBox[aBox.length-1].offsetHeight/2);
+	var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+	var height = document.body.clientHeight || document.documentElement.clientHeight;
+	//console.log(scrollTop);
+
+	return (lastBoxH < scrollTop + height)?true:false;
 }
